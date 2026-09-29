@@ -124,6 +124,8 @@ p{margin:8px 0}
 .letter{text-align:justify;margin:14px 0;font-size:16.5px;hyphens:auto}
 .letter p{margin:10px 0}
 .letter p:first-child::first-letter{float:left;font:900 62px/.78 'Playfair Display',serif;padding:5px 8px 0 0;color:var(--red)}
+.poem{margin:14px 0;padding:12px 10px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);text-align:center;font:italic 400 17px/1.7 'Old Standard TT',serif}
+.poem span{display:block;margin-top:8px;color:var(--red);font-weight:700}
 .sign{text-align:right;font:italic 700 20px 'Playfair Display',serif;color:var(--red)}
 .collage{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;padding:20px 0 26px}
 .pic{position:relative;margin:0;filter:drop-shadow(0 6px 8px rgba(30,3,3,.38));transform:rotate(var(--r));opacity:0;cursor:zoom-in}
@@ -219,12 +221,10 @@ p{margin:8px 0}
     <div class="rule"></div>
     <div id="bq"></div>
     <div class="letter">
-      <p class="rv" style="animation-delay:.3s">My elegant lady, my favorite little baby &mdash; both, always, all at once. Today the whole cover belongs to you, because for twenty&#8209;three years the world has been lucky to have you in it, and for the part of it I get to share, I am the luckiest man in print.</p>
-      <p class="rv" style="animation-delay:1.7s">I love you for every reason you ever gave me: those big soft bambi eyes that end an argument before it even starts; the way you can fall asleep anywhere and somehow make it look like art; chicken shawarma at midnight; salted caramel over absolutely everything else; and the name Batooti, which only sounds right in your voice.</p>
-      <p class="rv" style="animation-delay:3.1s">And I love you for every reason you never said out loud &mdash; the tiny, quiet things you do without noticing, the way you make a plain day feel like an event, the softness you hide behind that elegance. I collect all of it like little clippings, and I keep every one.</p>
-      <p class="rv" style="animation-delay:4.5s">From our first date in March to this very moment, you have been my favorite cover story. So here are twenty&#8209;three flowers and twenty&#8209;three little pictures, one for every year of you. Oh, and you won the game. Obviously.</p>
-      <p class="rv" style="animation-delay:5.9s">Happy Birthday, Gawhara. Every year with you is the best issue yet, and I plan to subscribe for life.</p>
-      <p class="rv sign" style="animation-delay:7s">&mdash; your Batooti &hearts;</p>
+      <p class="rv" style="animation-delay:.3s">Happy 23rd Birthday, Gawhara. My elegant lady, my favorite little baby &mdash; I love you for every reason you gave me, and every reason you didn&rsquo;t.</p>
+      <div class="poem rv" style="animation-delay:1.8s">In my eyes there is a gem, a shining gem beyond all tales,<br>From desert sands to the heart you came, and nothing in me stayed the same,<br>Bambi eyes with soft deep stare, a thousand emotions hiding there,<br>Wallahi, you are art, divine and rare, no one alive can ever compare.<br><span>So here&rsquo;s to you at twenty&#8209;three, the girl who means the world to me,<br>and every year that&rsquo;s left to be, I want you next to me.</span></div>
+      <p class="rv" style="animation-delay:3.6s">Twenty&#8209;three flowers and twenty&#8209;three pictures, one for every year of you. Oh, and you won the game. Obviously.</p>
+      <p class="rv sign" style="animation-delay:4.8s">&mdash; your Batooti &hearts;</p>
     </div>
     <div class="rule"></div>
     <div class="eyebrow">23 photos &middot; clipped and pinned for you</div>
@@ -283,29 +283,27 @@ function rainHearts(n){for(let i=0;i<n;i++){const d=document.createElement('div'
 function girl(st){
   const z=st==='sleep';
   const eyes=z
-   ?'<path d="M28.5 40q4.5 4 9 0M42.5 40q4.5 4 9 0" stroke="#1b0f0c" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M28 40l-2 2M51.5 40l2 2" stroke="#1b0f0c" stroke-width="1.3" stroke-linecap="round"/>'
-   :'<ellipse cx="33.5" cy="40" rx="4" ry="5" fill="#1b0f0c"/><ellipse cx="46.5" cy="40" rx="4" ry="5" fill="#1b0f0c"/><ellipse cx="33.5" cy="41.6" rx="2.4" ry="2.4" fill="#4a2a1d" opacity=".55"/><ellipse cx="46.5" cy="41.6" rx="2.4" ry="2.4" fill="#4a2a1d" opacity=".55"/><circle cx="32" cy="38" r="1.6" fill="#fff"/><circle cx="45" cy="38" r="1.6" fill="#fff"/><circle cx="35.2" cy="42.6" r=".8" fill="#fff" opacity=".85"/><circle cx="48.2" cy="42.6" r=".8" fill="#fff" opacity=".85"/><path d="M28 39.5q5-6.5 11-1M41 38.5q6-5.5 11 1" stroke="#1b0f0c" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M28.4 38.8l-2.6-1.2M51.6 38.8l2.6-1.2" stroke="#1b0f0c" stroke-width="1.5" stroke-linecap="round"/>';
+   ?'<path d="M28.5 40.5q4.5 4 9 0M42.5 40.5q4.5 4 9 0" stroke="#2a140d" stroke-width="2" fill="none" stroke-linecap="round"/>'
+   :'<ellipse cx="33.5" cy="40.4" rx="3.7" ry="4.5" fill="#4a2a1a"/><ellipse cx="46.5" cy="40.4" rx="3.7" ry="4.5" fill="#4a2a1a"/><ellipse cx="33.5" cy="40.6" rx="2" ry="2.6" fill="#1d0e08"/><ellipse cx="46.5" cy="40.6" rx="2" ry="2.6" fill="#1d0e08"/><circle cx="32.2" cy="38.6" r="1.5" fill="#fff"/><circle cx="45.2" cy="38.6" r="1.5" fill="#fff"/><circle cx="35" cy="42.4" r=".8" fill="#fff" opacity=".8"/><circle cx="48" cy="42.4" r=".8" fill="#fff" opacity=".8"/><path d="M28.6 39.6q5-6 10.6-1.2M40.8 38.4q5.6-4.8 10.6 1.2" stroke="#1d0e08" stroke-width="1.9" fill="none" stroke-linecap="round"/><path d="M29 38.8l-2.4-1.4M51 38.8l2.4-1.4" stroke="#1d0e08" stroke-width="1.4" stroke-linecap="round"/>';
   const lips=z
-   ?'<path d="M35 53.5q5 2.4 10 0" stroke="#b03e52" stroke-width="2" fill="none" stroke-linecap="round"/>'
-   :'<path d="M34.5 52.6q2.6-2.4 5.5-.9q2.9-1.5 5.5.9q-2.6 5.4-5.5 5.4t-5.5-5.4z" fill="#c4485c"/><path d="M34.5 52.6q5.5 2 11 0" stroke="#8f2a3d" stroke-width=".9" fill="none"/><ellipse cx="40" cy="55.7" rx="2.6" ry="1" fill="#fff" opacity=".5"/>';
-  return `<svg viewBox="0 0 80 110"><defs><linearGradient id="gsk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a26d54"/><stop offset="1" stop-color="#80503c"/></linearGradient><linearGradient id="ghr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3c2722"/><stop offset="1" stop-color="#170c0a"/></linearGradient><linearGradient id="gtp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3b3b9"/><stop offset="1" stop-color="#e58c97"/></linearGradient></defs>
-<path d="M12 46C9 16 24 5 40 5s31 11 28 41c-1 16 2 28 6 38-18 8-50 8-68 0 4-10 7-22 6-38z" fill="url(#ghr)"/>
-<rect x="34.5" y="56" width="11" height="15" rx="4" fill="#8a5a44"/><path d="M34.5 62q5.5 4 11 0v5h-11z" fill="#6f4433" opacity=".55"/>
-<path d="M10 110c0-24 12-38 30-38s30 14 30 38z" fill="url(#gtp)" stroke="#1b1512" stroke-width="1.4" stroke-linejoin="round"/>
-<path d="M29 73.5q11 15 22 0z" fill="#8a5a44"/>
-<path d="M30 77q10 6 20 0" stroke="#e9a0a6" stroke-width=".01" fill="none"/>
-<path d="M32.5 77q7.5 8 15 0" stroke="#e9e4d8" stroke-width=".9" fill="none"/><circle cx="40" cy="83.6" r="1.5" fill="#fff" stroke="#c9d1d6" stroke-width=".5"/><circle cx="38.3" cy="82.2" r="1.1" fill="#fff"/><circle cx="41.7" cy="82.2" r="1.1" fill="#fff"/>
+   ?'<path d="M35.5 54q4.5 2 9 0" stroke="#9c4f57" stroke-width="1.8" fill="none" stroke-linecap="round"/>'
+   :'<path d="M35 53q2.5-2 5-.7q2.5-1.3 5 .7q-2.5 4.6-5 4.6t-5-4.6z" fill="#b8626a"/><path d="M35 53q5 1.8 10 0" stroke="#8a3f4b" stroke-width=".8" fill="none"/><ellipse cx="40" cy="55.8" rx="2.2" ry=".9" fill="#fff" opacity=".45"/>';
+  return `<svg viewBox="0 0 80 110"><defs><linearGradient id="gsk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c88f68"/><stop offset="1" stop-color="#a87050"/></linearGradient><linearGradient id="ghr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b3a26"/><stop offset="1" stop-color="#341911"/></linearGradient><linearGradient id="gtp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ecd3a8"/><stop offset="1" stop-color="#d4b283"/></linearGradient></defs>
+<path d="M11 46C8 15 24 4 40 4s32 11 29 42c-1 14 1 28 5 46-4 7-8 4-10-2-2 8-8 11-12 5-3 7-9 8-12 2-4 6-10 4-12-2-2 6-8 6-10 0-3 5-8 2-8-4 6-18 10-32 8-46z" fill="url(#ghr)"/>
+<rect x="34.5" y="56" width="11" height="15" rx="4" fill="#b07853"/>
+<path d="M10 110c0-24 12-38 30-38s30 14 30 38z" fill="url(#gtp)" stroke="#5a3323" stroke-width="1.2" stroke-linejoin="round"/>
+<path d="M28 73.5q12 17 24 0z" fill="#b07853"/>
+<path d="M31 77q9 11 18 0" stroke="#c9a15a" stroke-width=".9" fill="none"/><path d="M40 90.5c-3.2-2.4-4.6-3.8-4.6-5.6a2.5 2.5 0 0 1 4.6-1.2 2.5 2.5 0 0 1 4.6 1.2c0 1.8-1.4 3.2-4.6 5.6z" fill="#f0c98a" stroke="#b9873a" stroke-width=".6"/>
+<path d="M22 44C18 62 20 84 26 102c-2 5-6 6-9 3-4-18-3-40 0-58z" fill="url(#ghr)"/><path d="M58 44c4 18 2 40-4 58 2 5 6 6 9 3 4-18 3-40 0-58z" fill="url(#ghr)"/>
 <ellipse cx="40" cy="42" rx="16" ry="19" fill="url(#gsk)"/>
-<ellipse cx="25" cy="49" rx="4" ry="6" fill="#7a4b37"/><ellipse cx="55" cy="49" rx="4" ry="6" fill="#7a4b37"/>
-<circle cx="24.6" cy="53.5" r="1.7" fill="#e0b84a"/><circle cx="55.4" cy="53.5" r="1.7" fill="#e0b84a"/>
-<path d="M22 40C19 20 30 8 42 8c13 0 21 11 17 32-4-9-8-17-18-18-10 1-16 8-19 18z" fill="url(#ghr)"/>
+<path d="M22 40C19 20 30 8 42 8c13 0 21 11 17 32-3-9-8-17-18-18-10 1-16 8-19 18z" fill="url(#ghr)"/>
 <path d="M22 38c-4 14-3 30 2 44l7-3c-4-13-5-27-3-41z" fill="url(#ghr)"/><path d="M58 38c4 14 3 30-2 44l-7-3c4-13 5-27 3-41z" fill="url(#ghr)"/>
-<path d="M30 14q-6 6-8 18M50 13q7 6 9 19M24 50q-1 14 3 24M56 50q1 14-3 24" stroke="#6b4a40" stroke-width="1" fill="none" opacity=".55" stroke-linecap="round"/>
-<path d="M27.5 32q6-4 12-1.5M40.5 30.5q6-2.5 12 1.5" stroke="#241410" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+<path d="M30 13q-7 6-8 20M50 13q8 6 9 20M23 52q-3 16 1 34M57 52q3 16-1 34" stroke="#9a6446" stroke-width="1" fill="none" opacity=".5" stroke-linecap="round"/>
+<path d="M28 31q6-3.5 12-1.2M40.5 29.8q6-2.3 12 1.2" stroke="#3a1f14" stroke-width="1.2" fill="none" stroke-linecap="round"/>
 ${eyes}
-<ellipse cx="27.5" cy="48" rx="4.4" ry="2.4" fill="#e9707a" opacity=".38"/><ellipse cx="52.5" cy="48" rx="4.4" ry="2.4" fill="#e9707a" opacity=".38"/>
-<path d="M38.4 44q-1 4-2.4 5.2q2.2 1.3 4.4 1.3t4.4-1.3q-1.4-1.2-2.4-5.2" stroke="#4f2c1f" stroke-width="1" fill="none" stroke-linecap="round" opacity=".7"/>
-<circle cx="44.2" cy="49.2" r="1.15" fill="#fff" stroke="#8a8f93" stroke-width=".4"/>
+<rect x="25.5" y="33" width="16" height="14" rx="5.5" fill="#fff" fill-opacity=".14" stroke="#5a2a1c" stroke-width="1.8"/><rect x="38.5" y="33" width="16" height="14" rx="5.5" fill="#fff" fill-opacity=".14" stroke="#5a2a1c" stroke-width="1.8"/><path d="M41.5 38q-1.5-1.5-3 0" stroke="#5a2a1c" stroke-width="1.6" fill="none"/><path d="M27.5 36q2-2 6-2" stroke="#fff" stroke-width="1" opacity=".6" fill="none" stroke-linecap="round"/><path d="M41 36q2-2 6-2" stroke="#fff" stroke-width="1" opacity=".6" fill="none" stroke-linecap="round"/>
+<ellipse cx="27" cy="50" rx="4.2" ry="2.4" fill="#e4737a" opacity=".38"/><ellipse cx="53" cy="50" rx="4.2" ry="2.4" fill="#e4737a" opacity=".38"/>
+<path d="M39 46.5q-1 3-2.2 4.2q1.8 1.2 3.2 1.2t3.2-1.2q-1.2-1.2-2.2-4.2" stroke="#7a4630" stroke-width=".9" fill="none" stroke-linecap="round" opacity=".7"/>
 ${lips}
 ${z?'<text x="60" y="16" font-family="Special Elite,monospace" font-size="11" fill="#a8231b">z</text><text x="67" y="8" font-family="Special Elite,monospace" font-size="8" fill="#a8231b">z</text>':''}</svg>`;
 }
