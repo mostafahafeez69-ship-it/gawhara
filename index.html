@@ -12,6 +12,7 @@
   --paper:#f4efe3;--paper-d:#e6dcc4;--ink:#1b1512;--mute:#6d6255;--pink:#e9a0a6;
   --n:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+input{-webkit-user-select:text;user-select:text}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 html,body{margin:0}
 html{-webkit-text-size-adjust:100%;-webkit-touch-callout:none}
@@ -67,7 +68,7 @@ p{margin:8px 0}
   touch-action:none;overscroll-behavior:contain;box-shadow:inset 0 -18px 22px -14px rgba(168,35,27,.28)}
 .item{position:absolute;width:38px;height:38px;transform:translate(-50%,-50%);pointer-events:none;will-change:top}
 .item svg{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.28))}
-.player{position:absolute;bottom:2%;width:54px;height:68px;transform:translateX(-50%);pointer-events:none;will-change:left}
+.player{position:absolute;bottom:0;width:60px;height:82px;transform:translateX(-50%);pointer-events:none;will-change:left}
 .player svg{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 4px 4px rgba(30,3,3,.35));animation:bobp 1.1s ease-in-out infinite;transform-origin:bottom}
 @keyframes bobp{50%{transform:translateY(-3px) scaleY(1.02)}}
 .girl3{width:150px;margin:6px auto}.girl3 svg{width:100%;height:auto;display:block;overflow:visible;filter:drop-shadow(0 6px 8px rgba(30,3,3,.3))}
@@ -87,6 +88,24 @@ p{margin:8px 0}
 
 .shake{animation:sh .38s}@keyframes sh{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
 .wig{animation:wg .5s}@keyframes wg{25%{transform:rotate(-7deg) scale(1.05)}75%{transform:rotate(7deg) scale(1.05)}}
+.pw{display:block;width:78%;margin:12px auto 0;padding:13px;border:2px solid var(--ink);background:#fffdf6;font:18px 'Special Elite',monospace;text-align:center;letter-spacing:.14em;color:var(--ink);border-radius:0;-webkit-appearance:none;appearance:none;outline:none}
+.pw:focus{box-shadow:3px 3px 0 var(--red)}
+.stampimg{width:96px;margin:6px auto 0}.stampimg svg{width:100%;height:auto;display:block;transform:rotate(-8deg)}
+.stampimg.done svg{animation:stamp .6s cubic-bezier(.3,1.6,.5,1) forwards}
+.err{font:italic 700 15px 'Playfair Display',serif;color:var(--red);min-height:22px;margin:6px 0}
+.gift.sm{width:120px;margin:2px auto}
+.q{font:900 19px/1.2 'Playfair Display',serif;margin:6px 0 8px}
+.opt{display:block;width:100%;margin:6px 0;padding:11px;background:var(--paper);border:2px solid var(--ink);font:15px 'Special Elite',monospace;color:var(--ink);cursor:pointer;box-shadow:3px 3px 0 var(--red)}
+.opt:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--red)}
+.clear{overflow-y:auto;justify-content:flex-start!important;-webkit-overflow-scrolling:touch}
+.clear>*{flex-shrink:0}
+.clear .btn{margin:8px 0}
+.rbox{width:min(70vw,220px);margin:8px auto;cursor:pointer}
+.rbox.gift{animation:pulse 2.2s ease-in-out infinite}.rbox.open{animation:none}
+.no{position:relative;transition:transform .2s}
+.yn{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0;min-height:64px}
+.spark{animation:tw 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes tw{50%{opacity:.25;transform:scale(.6)}}
 /* sleepy */
 
 .moon{background:none;border:0;padding:0;width:104px;height:104px;margin:6px auto;display:block;cursor:pointer;transition:transform .15s}
@@ -152,8 +171,12 @@ p{margin:8px 0}
     <h1>Only for <i>jojo</i><br>to play</h1>
     <div class="rule"></div>
     <p>Happy 23rd Birthday, Gawhara.</p>
-    <button class="seal-btn" id="sealBtn" aria-label="Start"></button>
-    <p class="hint" id="shint">tap the stamp to start</p>
+    <div class="stampimg" id="stampImg"></div>
+    <p style="margin:10px 0 0">To start, enter the password.</p>
+    <input class="pw" id="pw" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="DD / MM" maxlength="24">
+    <div class="err" id="pwErr"></div>
+    <button class="btn" id="pwGo">Unlock</button>
+    <p class="hint" id="shint">hint: the most important day of the year</p>
     <p class="mut">catch flowers, shawarma, ice cream & energy drinks &middot; dodge the cats &middot; win the big gift</p>
   </section>
 
@@ -165,9 +188,10 @@ p{margin:8px 0}
       <div class="player" id="player"></div>
       <div class="clear" id="clearOv">
         <div class="eyebrow" id="clTitle"></div>
-        <div class="gift" id="clGift"></div>
-        <p id="clLine" style="font:italic 700 18px 'Playfair Display',serif;color:var(--red);margin:0 0 4px"></p>
-        <button class="btn" id="clGo">Continue</button>
+        <div class="gift sm" id="clGift"></div>
+        <div id="qbox"><div class="q" id="qtxt"></div><div id="qopts"></div><div class="err" id="qfb"></div></div>
+        <p id="clLine" style="font:italic 700 18px 'Playfair Display',serif;color:var(--red);margin:0 0 4px;display:none"></p>
+        <button class="btn" id="clGo" style="display:none">Continue</button>
       </div>
     </div>
     <div class="ctrls">
@@ -205,7 +229,16 @@ p{margin:8px 0}
     <div class="rule"></div>
     <div class="eyebrow">23 photos &middot; clipped and pinned for you</div>
     <div class="collage" id="collage"></div>
-    <button class="btn ghost" id="again">Play again</button>
+    <div class="rule"></div>
+    <div class="eyebrow" id="lastEy">One more gift&hellip;</div>
+    <div class="gift rbox" id="ringBox"></div>
+    <p class="hint" id="rgHint">tap the little box</p>
+    <div id="ask" style="display:none">
+      <h2 style="font-size:28px">Gawhara,<br><span style="color:var(--red)">will you be my girlfriend?</span></h2>
+      <div class="yn" id="yn"><button class="btn" id="yes">Yes &hearts;</button><button class="btn ghost" id="yes2">Of course yes</button><button class="btn ghost no" id="no">No</button></div>
+    </div>
+    <div id="yesMsg" style="display:none"><h2 style="color:var(--red)">She said yes.</h2><p style="font-size:17px">Then it's official, my love &mdash; you are my girlfriend, my future, and my favorite cover story.<br>Now hold out your hand&hellip; this ring has been waiting for you.</p></div>
+    <button class="btn ghost" id="again" style="margin-top:22px">Play again</button>
     </div>
   </section>
   </div></div>
@@ -248,11 +281,33 @@ function rainHearts(n){for(let i=0;i<n;i++){const d=document.createElement('div'
 
 
 function girl(st){
-  const eyes=st==='sleep'
-   ?'<path d="M22 32q4 4 8 0M34 32q4 4 8 0" stroke="#1b1512" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
-   :'<ellipse cx="26" cy="32" rx="3.8" ry="4.8" fill="#1b1512"/><ellipse cx="38" cy="32" rx="3.8" ry="4.8" fill="#1b1512"/><circle cx="24.7" cy="30.3" r="1.4" fill="#fff"/><circle cx="36.7" cy="30.3" r="1.4" fill="#fff"/><circle cx="27.4" cy="34" r=".8" fill="#fff"/><circle cx="39.4" cy="34" r=".8" fill="#fff"/><path d="M20.5 28q5-5 10-1M33.5 27q5-4 10 1" stroke="#1b1512" stroke-width="1.6" fill="none" stroke-linecap="round"/>';
-  const mouth=st==='sleep'?'<path d="M28 44q4 2 8 0" stroke="#b5525c" stroke-width="1.8" fill="none" stroke-linecap="round"/>':'<path d="M27 43q5 5 10 0q-5 1.6-10 0z" fill="#d86b7c" stroke="#b5525c" stroke-width="1" stroke-linejoin="round"/><ellipse cx="32.5" cy="43.6" rx="2" ry=".8" fill="#fff" opacity=".55"/>';
-  return `<svg viewBox="0 0 64 82"><path d="M9 36C6 12 19 3 32 3s26 9 23 33c0 12 1 22 5 30-13 5-43 5-56 0 4-8 5-18 5-30z" fill="#2a1a17"/><rect x="26" y="46" width="12" height="12" fill="#6b3f2d"/><path d="M12 82c0-15 7-25 20-25s20 10 20 25z" fill="#e9a0a6" stroke="#1b1512" stroke-width="1.6" stroke-linejoin="round"/><path d="M27 57q5 6 10 0" fill="#6b3f2d"/><ellipse cx="32" cy="33" rx="17.5" ry="19.5" fill="#7a4b37"/><path d="M13 32C11 14 22 7 33 7c11 0 21 7 19 25-4-9-10-14-19-14-9 0-15 5-20 14z" fill="#2a1a17"/><path d="M12 33c-2 12-1 22 3 31l6-2c-3-9-4-18-3-29z" fill="#2a1a17"/><path d="M52 33c2 12 1 22-3 31l-6-2c3-9 4-18 3-29z" fill="#2a1a17"/>${eyes}<ellipse cx="20.5" cy="39" rx="3.4" ry="2" fill="#e9707a" opacity=".45"/><ellipse cx="43.5" cy="39" rx="3.4" ry="2" fill="#e9707a" opacity=".45"/><circle cx="36.6" cy="38.4" r="1.1" fill="#fff" stroke="#1b1512" stroke-width=".4"/><path d="M31 38q1.5 2 3 0" stroke="#4a2a1d" stroke-width="1.2" fill="none" stroke-linecap="round"/>${mouth}${st==='sleep'?'<text x="46" y="14" font-family="Special Elite,monospace" font-size="10" fill="#a8231b">z</text><text x="52" y="6" font-family="Special Elite,monospace" font-size="8" fill="#a8231b">z</text>':''}</svg>`;
+  const z=st==='sleep';
+  const eyes=z
+   ?'<path d="M28.5 40q4.5 4 9 0M42.5 40q4.5 4 9 0" stroke="#1b0f0c" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M28 40l-2 2M51.5 40l2 2" stroke="#1b0f0c" stroke-width="1.3" stroke-linecap="round"/>'
+   :'<ellipse cx="33.5" cy="40" rx="4" ry="5" fill="#1b0f0c"/><ellipse cx="46.5" cy="40" rx="4" ry="5" fill="#1b0f0c"/><ellipse cx="33.5" cy="41.6" rx="2.4" ry="2.4" fill="#4a2a1d" opacity=".55"/><ellipse cx="46.5" cy="41.6" rx="2.4" ry="2.4" fill="#4a2a1d" opacity=".55"/><circle cx="32" cy="38" r="1.6" fill="#fff"/><circle cx="45" cy="38" r="1.6" fill="#fff"/><circle cx="35.2" cy="42.6" r=".8" fill="#fff" opacity=".85"/><circle cx="48.2" cy="42.6" r=".8" fill="#fff" opacity=".85"/><path d="M28 39.5q5-6.5 11-1M41 38.5q6-5.5 11 1" stroke="#1b0f0c" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M28.4 38.8l-2.6-1.2M51.6 38.8l2.6-1.2" stroke="#1b0f0c" stroke-width="1.5" stroke-linecap="round"/>';
+  const lips=z
+   ?'<path d="M35 53.5q5 2.4 10 0" stroke="#b03e52" stroke-width="2" fill="none" stroke-linecap="round"/>'
+   :'<path d="M34.5 52.6q2.6-2.4 5.5-.9q2.9-1.5 5.5.9q-2.6 5.4-5.5 5.4t-5.5-5.4z" fill="#c4485c"/><path d="M34.5 52.6q5.5 2 11 0" stroke="#8f2a3d" stroke-width=".9" fill="none"/><ellipse cx="40" cy="55.7" rx="2.6" ry="1" fill="#fff" opacity=".5"/>';
+  return `<svg viewBox="0 0 80 110"><defs><linearGradient id="gsk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a26d54"/><stop offset="1" stop-color="#80503c"/></linearGradient><linearGradient id="ghr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3c2722"/><stop offset="1" stop-color="#170c0a"/></linearGradient><linearGradient id="gtp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3b3b9"/><stop offset="1" stop-color="#e58c97"/></linearGradient></defs>
+<path d="M12 46C9 16 24 5 40 5s31 11 28 41c-1 16 2 28 6 38-18 8-50 8-68 0 4-10 7-22 6-38z" fill="url(#ghr)"/>
+<rect x="34.5" y="56" width="11" height="15" rx="4" fill="#8a5a44"/><path d="M34.5 62q5.5 4 11 0v5h-11z" fill="#6f4433" opacity=".55"/>
+<path d="M10 110c0-24 12-38 30-38s30 14 30 38z" fill="url(#gtp)" stroke="#1b1512" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M29 73.5q11 15 22 0z" fill="#8a5a44"/>
+<path d="M30 77q10 6 20 0" stroke="#e9a0a6" stroke-width=".01" fill="none"/>
+<path d="M32.5 77q7.5 8 15 0" stroke="#e9e4d8" stroke-width=".9" fill="none"/><circle cx="40" cy="83.6" r="1.5" fill="#fff" stroke="#c9d1d6" stroke-width=".5"/><circle cx="38.3" cy="82.2" r="1.1" fill="#fff"/><circle cx="41.7" cy="82.2" r="1.1" fill="#fff"/>
+<ellipse cx="40" cy="42" rx="16" ry="19" fill="url(#gsk)"/>
+<ellipse cx="25" cy="49" rx="4" ry="6" fill="#7a4b37"/><ellipse cx="55" cy="49" rx="4" ry="6" fill="#7a4b37"/>
+<circle cx="24.6" cy="53.5" r="1.7" fill="#e0b84a"/><circle cx="55.4" cy="53.5" r="1.7" fill="#e0b84a"/>
+<path d="M22 40C19 20 30 8 42 8c13 0 21 11 17 32-4-9-8-17-18-18-10 1-16 8-19 18z" fill="url(#ghr)"/>
+<path d="M22 38c-4 14-3 30 2 44l7-3c-4-13-5-27-3-41z" fill="url(#ghr)"/><path d="M58 38c4 14 3 30-2 44l-7-3c4-13 5-27 3-41z" fill="url(#ghr)"/>
+<path d="M30 14q-6 6-8 18M50 13q7 6 9 19M24 50q-1 14 3 24M56 50q1 14-3 24" stroke="#6b4a40" stroke-width="1" fill="none" opacity=".55" stroke-linecap="round"/>
+<path d="M27.5 32q6-4 12-1.5M40.5 30.5q6-2.5 12 1.5" stroke="#241410" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+${eyes}
+<ellipse cx="27.5" cy="48" rx="4.4" ry="2.4" fill="#e9707a" opacity=".38"/><ellipse cx="52.5" cy="48" rx="4.4" ry="2.4" fill="#e9707a" opacity=".38"/>
+<path d="M38.4 44q-1 4-2.4 5.2q2.2 1.3 4.4 1.3t4.4-1.3q-1.4-1.2-2.4-5.2" stroke="#4f2c1f" stroke-width="1" fill="none" stroke-linecap="round" opacity=".7"/>
+<circle cx="44.2" cy="49.2" r="1.15" fill="#fff" stroke="#8a8f93" stroke-width=".4"/>
+${lips}
+${z?'<text x="60" y="16" font-family="Special Elite,monospace" font-size="11" fill="#a8231b">z</text><text x="67" y="8" font-family="Special Elite,monospace" font-size="8" fill="#a8231b">z</text>':''}</svg>`;
 }
 const inner=t=>ICONS[t]().replace(/^<svg[^>]*>|<\/svg>$/g,'');
 const STUFF=[{t:'flower',x:36,y:34},{t:'energy',x:78,y:10},{t:'flower',x:112,y:30},{t:'heart',x:138,y:44}];
@@ -282,21 +337,30 @@ document.addEventListener('touchstart',()=>{try{if(AC&&AC.state==='suspended')AC
 
 $('player').innerHTML=girl('happy');
 
-/* ---------- opening stamp ---------- */
-$('sealBtn').innerHTML=`<svg viewBox="0 0 160 160"><defs><path id="ring" d="M80 80m-56 0a56 56 0 1 1 112 0a56 56 0 1 1 -112 0"/></defs>
+/* ---------- opening password ---------- */
+$('stampImg').innerHTML=`<svg viewBox="0 0 160 160"><defs><path id="ring" d="M80 80m-56 0a56 56 0 1 1 112 0a56 56 0 1 1 -112 0"/></defs>
 <circle cx="80" cy="80" r="74" fill="#a8231b"/>
 <circle cx="80" cy="80" r="74" fill="none" stroke="#f4efe3" stroke-width="2" stroke-dasharray="3 4" transform="scale(.94) translate(5 5)"/>
 <circle cx="80" cy="80" r="40" fill="none" stroke="#f4efe3" stroke-width="2.4"/>
-<text font-family="Special Elite,monospace" font-size="14" letter-spacing="3" fill="#f4efe3"><textPath href="#ring" startOffset="2%">TAP TO PLAY &#9733; TAP TO PLAY &#9733; TAP TO PLAY &#9733;</textPath></text>
+<text font-family="Special Elite,monospace" font-size="14" letter-spacing="3" fill="#f4efe3"><textPath href="#ring" startOffset="2%">FOR JOJO ONLY &#9733; FOR JOJO ONLY &#9733; FOR JOJO ONLY &#9733;</textPath></text>
 <path d="${HP}" transform="translate(80 82) scale(1.05) translate(-20 -21)" fill="#f4efe3"/></svg>`;
+function pwOk(v){const d=v.replace(/\D/g,''),s=v.toLowerCase();return d.startsWith('2010')||d.startsWith('1020')||(/oct/.test(s)&&/20/.test(s))}
 let opened=false;
-$('sealBtn').onclick=()=>{
-  if(opened)return;opened=true;
-  if($('bg').getAttribute('src'))setM(true);
-  $('sealBtn').classList.add('done');tick();sOk();
-  $('shint').textContent='stamped!';
-  setTimeout(()=>{show(1);startRound(0)},900);
-};
+function tryPw(){
+  if(opened)return;
+  if(pwOk($('pw').value)){
+    opened=true;
+    if($('bg').getAttribute('src'))setM(true);
+    $('stampImg').classList.add('done');tick();sOk();
+    $('pwErr').textContent='';$('shint').textContent='welcome, birthday girl';
+    setTimeout(()=>{show(1);startRound(0)},900);
+  }else{
+    beep(200,.25,'sawtooth',.07);shake($('pw'));
+    $('pwErr').textContent=rnd(['Not quite, my love. Think harder ♥','Hmm, that\u2019s not it, baby. Day and month!','So close\u2026 try again, birthday girl ♥']);
+  }
+}
+$('pwGo').onclick=tryPw;
+$('pw').addEventListener('keydown',e=>{if(e.key==='Enter'){tryPw();$('pw').blur()}});
 
 /* ---------- catch game ---------- */
 const GOOD=['flower','heart','icecream','shawarma','energy'];
@@ -312,9 +376,12 @@ const ICONS={
   cat:c=>`<svg viewBox="0 0 40 40"><path d="M9 10 15 18M31 10 25 18" stroke="#1b1512" stroke-width="5" stroke-linecap="round"/><circle cx="20" cy="23" r="13" fill="#3a3330" stroke="#1b1512" stroke-width="1.4"/><circle cx="15" cy="21" r="2.6" fill="#fff"/><circle cx="25" cy="21" r="2.6" fill="#fff"/><circle cx="15" cy="21" r="1.2" fill="#221"/><circle cx="25" cy="21" r="1.2" fill="#221"/><path d="M18 28q2 2 4 0" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>`
 };
 const ROUNDS=[
-  {target:9, min:2.4, max:3.3, spawn:820, photo:1, gift:"a brown handbag", line:"A brown handbag, picked just for you."},
-  {target:12, min:2.8, max:3.9, spawn:680, photo:7, gift:"makeup", line:"All the makeup for the prettiest face in the issue."},
-  {target:15, min:3.2, max:4.4, spawn:560, photo:12, gift:"a new shirt", line:"A brand-new shirt. One last gift is waiting..."}
+  {target:9, min:2.4, max:3.3, spawn:820, gift:"a brown handbag", line:"A brown handbag, picked just for you.",
+   q:"Who is your favorite person?", opts:[["Mustafa",1],["Nashwa",0],["Shahad",0]], bad:"Wrong, baby. Think about who made this game ♥"},
+  {target:12, min:2.8, max:3.9, spawn:680, gift:"makeup", line:"All the makeup for the prettiest face in the issue.",
+   q:"When was our first date?", opts:[["December",0],["February",0],["March",1],["May",0]], bad:"Nope. Try again, you should remember this one ♥"},
+  {target:15, min:3.2, max:4.4, spawn:560, gift:"a new shirt", line:"A brand-new shirt. One last gift is waiting...",
+   q:"What scares you the most?", all:1, opts:[["Exams",1],["Cats",1],["Shein orders",1]]}
 ];
 let round=0, good=0, lives=5, running=false, items=[], px=50, moveDir=0, spawnAcc=0, lastT=0, rafId=null;
 
@@ -379,12 +446,39 @@ function caught(it){
 }
 function roundClear(){
   running=false;cancelAnimationFrame(rafId);
-  sOk();rainHearts(16);
+  sOk();rainHearts(12);
   const cfg=ROUNDS[round];
-  $('clTitle').textContent='Round '+(round+1)+' cleared \u2014 you won '+cfg.gift+'!';
-  $('clGift').classList.remove('open');$('clGift').innerHTML=giftSVG(GIFTS[round]);setTimeout(()=>$('clGift').classList.add('open'),150);
-  $('clLine').textContent=cfg.line;
+  $('clTitle').textContent='Round '+(round+1)+' cleared \u2014 answer to open your gift';
+  $('clGift').classList.remove('open');$('clGift').innerHTML=giftSVG(GIFTS[round]);
+  $('qbox').style.display='block';$('qtxt').textContent=cfg.q;$('qfb').textContent='';
+  $('clLine').style.display='none';$('clGo').style.display='none';
+  const box=$('qopts');box.innerHTML='';
+  cfg.opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o[0];
+    b.onclick=()=>{
+      if(o[1]){
+        beep(660,.12,'sine',.08);
+        if(cfg.all)$('qfb').textContent=({'Exams':'Right. Exams are terrifying.','Cats':'Right. That is why you dodged them.','Shein orders':'Right. The bank account agrees.'})[o[0]];
+        else $('qfb').textContent='Correct ♥';
+        box.querySelectorAll('button').forEach(x=>x.disabled=true);
+        setTimeout(unlockGift,cfg.all?900:500);
+      }else{
+        beep(200,.25,'sawtooth',.07);shake(b);$('qfb').textContent=cfg.bad;
+      }
+    };
+    box.appendChild(b);
+  });
+  $('clearOv').scrollTop=0;
   $('clearOv').classList.add('on');
+}
+function unlockGift(){
+  const cfg=ROUNDS[round];
+  sOk();rainHearts(18);
+  $('qbox').style.display='none';
+  $('clTitle').textContent='you won '+cfg.gift+'!';
+  $('clGift').classList.add('open');
+  $('clLine').textContent=cfg.line;$('clLine').style.display='block';
+  $('clGo').style.display='inline-block';
 }
 $('clGo').onclick=()=>{
   if(round+1<ROUNDS.length){startRound(round+1);}
@@ -435,6 +529,24 @@ function finale(){
   const bg=$('bigGift');bg.classList.remove('open');bg.innerHTML=giftSVG(BIG);$('bgHint').style.display='block';bigOpened=false;
   sWin();
 }
+function ringSVG(){
+  return `<svg viewBox="0 0 200 170"><g class="stuff"><circle cx="100" cy="66" r="27" fill="none" stroke="#e0b84a" stroke-width="9"/><circle cx="100" cy="66" r="27" fill="none" stroke="#fff3c4" stroke-width="2" stroke-dasharray="20 150" transform="rotate(-40 100 66)"/><polygon points="88,32 112,32 120,42 100,60 80,42" fill="#dff4ff" stroke="#1b1512" stroke-width="2" stroke-linejoin="round"/><path d="M80 42h40M100 60L94 32M100 60l6-28" stroke="#8fc6e8" stroke-width="1.2" fill="none"/><path class="spark" d="M126 24l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#fff3c4" stroke="#e0b84a"/><path class="spark" d="M70 26l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#fff3c4" stroke="#e0b84a" style="animation-delay:.5s"/></g><rect x="52" y="104" width="96" height="60" rx="6" fill="#5a0f1a" stroke="#1b1512" stroke-width="3"/><g class="lid"><rect x="48" y="86" width="104" height="22" rx="6" fill="#7a1a28" stroke="#1b1512" stroke-width="3"/><path d="M60 97h80" stroke="#e0b84a" stroke-width="2"/></g></svg>`;
+}
+$('ringBox').innerHTML=ringSVG();
+let ringOpened=false;
+$('ringBox').onclick=()=>{
+  if(ringOpened)return;ringOpened=true;
+  $('ringBox').classList.add('open');$('rgHint').style.display='none';sOk();rainHearts(14);
+  setTimeout(()=>{$('ask').style.display='block';$('ask').scrollIntoView({behavior:'smooth',block:'center'})},1300);
+};
+function yesSaid(){
+  $('yn').style.display='none';$('yesMsg').style.display='block';sWin();rainHearts(70);
+  setTimeout(()=>rainHearts(50),1800);[523,659,784,1047,1319].forEach((f,i)=>beep(f,.4,'sine',.09,1+i*.15));
+  $('yesMsg').scrollIntoView({behavior:'smooth',block:'center'});
+}
+$('yes').onclick=yesSaid;$('yes2').onclick=yesSaid;
+function dodge(e){if(e)e.preventDefault();const x=(Math.random()*160-80).toFixed(0),y=(Math.random()*70-35).toFixed(0);$('no').style.transform='translate('+x+'px,'+y+'px) rotate('+(Math.random()*30-15).toFixed(0)+'deg)';$('no').textContent=rnd(['No?','Nice try','Nope','Try again ♥'])}
+$('no').addEventListener('touchstart',dodge,{passive:false});$('no').addEventListener('mouseenter',dodge);$('no').addEventListener('click',dodge);
 let bigOpened=false;
 $('bigGift').onclick=()=>{
   if(bigOpened)return;bigOpened=true;
@@ -450,7 +562,7 @@ function revealAll(){
   sWin();rainHearts(28);
 }
 
-const NOTES=['us','my favorite','this day','remember?','home','sleepy you','forever','cover girl'];
+const NOTES=['the most beautiful girl','my cover girl','pure elegance','my favorite view','absolutely stunning','my queen','breathtaking','beautiful, always'];
 function buildCollage(){
   const c=$('collage');c.innerHTML='';
   const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.animationDelay=(Math.random()*.25).toFixed(2)+'s';e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1}):null;
@@ -468,7 +580,7 @@ function buildCollage(){
 }
 $('lbv').onclick=e=>e.stopPropagation();
 $('lb').onclick=()=>{$('lb').style.display='none';$('lbv').pause();$('lbv').removeAttribute('src')};
-$('again').onclick=()=>{opened=false;$('sealBtn').classList.remove('done');$('shint').textContent='tap the stamp to start';show(0)};
+$('again').onclick=()=>{opened=false;$('stampImg').classList.remove('done');$('pw').value='';$('pwErr').textContent='';$('shint').textContent='hint: the most important day of the year';show(0)};
 </script>
 </body>
 </html>
