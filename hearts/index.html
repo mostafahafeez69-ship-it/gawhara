@@ -135,7 +135,7 @@ const $=id=>document.getElementById(id);
 const cv=$('c'), ctx=cv.getContext('2d');
 const hash=(x,y)=>{const s=Math.sin(x*127.1+y*311.7)*43758.5453;return s-Math.floor(s)};
 const clamp=(v,a,b)=>v<a?a:v>b?b:v;
-const NAME=(window.CONFIG&&CONFIG.name)||'Jawhara';
+const NAME=(window.CONFIG&&CONFIG.name)||'Gawhara';
 
 /* ================= sound ================= */
 let AC=null, musicOn=false;
@@ -235,7 +235,7 @@ const SPOTS=[
 SPOTS.forEach((s,i)=>{s.i=i;if(s.h)s.o=OCC[s.y][s.x]});
 
 const AREAS=[
- {n:"Jawhara's Room",x0:3,y0:3,x1:13,y1:10},
+ {n:"Gawhara's Room",x0:3,y0:3,x1:13,y1:10},
  {n:'The Rose Garden',x0:18,y0:3,x1:31,y1:11},
  {n:'The Star Garden',x0:36,y0:3,x1:42,y1:11},
  {n:'Batooti Street',x0:0,y0:16,x1:45,y1:19},
@@ -591,7 +591,7 @@ function rain(n){for(let i=0;i<n;i++){const d=document.createElement('div');d.cl
 function startFinale(){
   state='final';finT.forEach(clearTimeout);finT=[];save();
   const f=$('final');['f1','f2','f3','f4','f5'].forEach(id=>$(id).classList.remove('on'));$('book').classList.remove('on');$('fbtns').classList.remove('on');
-  $('f4').innerHTML='HAPPY 23RD BIRTHDAY,<br>'+esc(CONFIG.bigName||'JAWHARA')+' &#10084;&#65039;';
+  $('f4').innerHTML='HAPPY 23RD BIRTHDAY,<br>'+esc(CONFIG.bigName||'GAWHARA')+' &#10084;&#65039;';
   $('f5').textContent='— '+(CONFIG.signature||'');
   f.scrollTop=0;f.classList.add('on');
   const at=(ms,fn)=>finT.push(setTimeout(fn,ms));

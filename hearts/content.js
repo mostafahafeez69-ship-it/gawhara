@@ -11,8 +11,8 @@
    ===================================================================== */
 
 const CONFIG = {
-  name: "Jawhara",              // her name, used in texts
-  bigName: "JAWHARA",           // name in the final big title
+  name: "Gawhara",              // her name, used in texts
+  bigName: "GAWHARA",           // name in the final big title
   signature: "your Batooti",    // how you sign
   music: "assets/music.m4a",    // background song (leave "" for none)
   player: "assets/her.png"      // the playable character image
@@ -20,7 +20,7 @@ const CONFIG = {
 
 const HEARTS = [
   { type: "birthday",   title: "Heart #1 — it begins",
-    text: "Happy 23rd birthday, Jawhara. 23 hearts are hidden in this little world. Each one is a piece of mine. Go find them all ♥",
+    text: "Happy 23rd birthday, Gawhara. 23 hearts are hidden in this little world. Each one is a piece of mine. Go find them all ♥",
     photo: null },
 
   { type: "compliment", title: "Those eyes",
