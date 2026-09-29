@@ -11,7 +11,8 @@ const CONFIG = {
   her: "Gawhara",            // her name
   me: "Batooti",             // what she calls you (shown as your name in dialogue)
   music: "assets/music.m4a", // background song ("" for none)
-  sprite: "assets/her.png"   // her character image
+  sprite: "assets/her.png",  // her character image
+  avatar: "assets/him.png"   // YOUR character image (transparent PNG bust)
 };
 
 /* ---------------- CHAPTER 1 — the first hello ---------------- */
