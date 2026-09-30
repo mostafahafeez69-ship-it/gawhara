@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0b0714">
+<title>Genius — Our Melody</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Playfair+Display:ital,wght@0,700;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f4efe3;--pink:#f4a6c0;--hot:#e0457b;--red:#c8382d;--gold:#e7bf4a;--vio:#8b6bd6;--bg:#0b0714;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--cream);font-family:'Press Start 2P',ui-monospace,monospace;overflow:hidden;touch-action:manipulation}
+body{background:radial-gradient(ellipse at 50% 30%,#2a1240 0%,#120a20 55%,#07040d 100%)}
+.stars{position:fixed;inset:0;pointer-events:none}
+.stars i{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;opacity:.15;animation:tw 2.6s infinite}
+@keyframes tw{50%{opacity:.9}}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(var(--sat) + 10px) 16px calc(var(--sab) + 10px)}
+.ov{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:20;background:rgba(7,4,13,.86);backdrop-filter:blur(3px)}
+.ov.on{display:flex}
+h1{font:italic 700 clamp(38px,12vw,64px)/1 'Playfair Display',serif;margin:0;color:var(--cream);text-shadow:0 4px 0 var(--hot),0 0 30px rgba(224,69,123,.5)}
+.sub{font-size:10px;color:var(--pink);letter-spacing:3px;margin:12px 0 22px}
+.how{font:italic 500 17px/1.5 'Playfair Display',serif;color:#d8cde8;max-width:340px;margin-bottom:26px}
+.btn{font:12px 'Press Start 2P',monospace;background:var(--hot);color:#fff;border:3px solid var(--cream);padding:16px 30px;box-shadow:5px 5px 0 #000;cursor:pointer;touch-action:manipulation}
+.btn:active{transform:translate(4px,4px);box-shadow:1px 1px 0 #000}
+.btn.sm{font-size:9px;padding:12px 18px}
+#hud{width:min(92vw,420px);display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:9px;color:var(--pink)}
+#hud .pips{display:flex;gap:5px}
+#hud .pips i{width:12px;height:12px;background:#2a1a3a;border:2px solid #3d2a52;transition:.3s}
+#hud .pips i.on{background:var(--hot);border-color:var(--pink);box-shadow:0 0 10px var(--hot)}
+.iconb{width:38px;height:38px;background:#160c26;border:2px solid var(--cream);color:var(--cream);font:14px monospace;cursor:pointer;box-shadow:3px 3px 0 var(--hot)}
+.iconb.off{opacity:.45}
+#board{position:relative;width:min(88vw,52vh,400px);aspect-ratio:1;border-radius:50%;padding:0;background:#0a0512;box-shadow:0 0 0 6px #1b0f2c,0 0 0 9px #3d2a52,0 30px 80px rgba(224,69,123,.25)}
+.pad{position:absolute;width:48.5%;height:48.5%;border:0;padding:0;cursor:pointer;background:var(--c);opacity:.34;filter:saturate(.7);transition:opacity .08s,filter .08s,transform .08s;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
+.pad svg{width:34%;height:34%;fill:#fff;opacity:.9;pointer-events:none}
+.pad.lit{opacity:1;filter:saturate(1.3) brightness(1.25);box-shadow:0 0 50px 8px var(--c);z-index:3;transform:scale(1.03)}
+.pad.lit svg{animation:pp .25s}
+@keyframes pp{50%{transform:scale(1.25)}}
+#p0{--c:#e0457b;top:0;left:0;border-radius:100% 6px 6px 6px}
+#p1{--c:#e7bf4a;top:0;right:0;border-radius:6px 100% 6px 6px}
+#p2{--c:#8b6bd6;bottom:0;left:0;border-radius:6px 6px 6px 100%}
+#p3{--c:#c8382d;bottom:0;right:0;border-radius:6px 6px 100% 6px}
+#board.lock .pad{cursor:default}
+#hub{position:absolute;left:50%;top:50%;width:34%;height:34%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 35%,#2a1740,#0b0714);border:4px solid #3d2a52;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;box-shadow:inset 0 0 20px rgba(0,0,0,.7)}
+#hub b{font-size:clamp(20px,7vw,34px);color:var(--cream)}
+#hub span{font-size:7px;color:var(--pink);margin-top:6px;text-align:center;line-height:1.5}
+#board.shake{animation:shk .45s}
+@keyframes shk{20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+#msg{margin-top:26px;min-height:40px;font:italic 500 19px/1.4 'Playfair Display',serif;color:var(--pink);text-align:center;max-width:340px}
+.duo{position:fixed;bottom:calc(var(--sab));z-index:1;pointer-events:none;height:16vh;opacity:.9}
+.duo.l{left:2vw}.duo.r{right:2vw;transform:scaleX(-1)}
+@media (max-height:700px){.duo{display:none}}
+.pol{background:var(--cream);color:#1a1020;padding:14px 14px 18px;width:min(84vw,340px);transform:rotate(-2deg);box-shadow:0 20px 60px rgba(0,0,0,.6);animation:pin .5s}
+@keyframes pin{from{transform:rotate(-8deg) scale(.7);opacity:0}}
+.pol .ph{aspect-ratio:1;background:#2a1a3a;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--pink);font-size:9px;line-height:1.7;padding:14px}
+.pol .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.pol .mt{font:italic 700 20px 'Playfair Display',serif;margin:14px 0 6px}
+.pol .mx{font:italic 500 16px/1.4 'Playfair Display',serif;color:#4a3a55}
+#fin h2{font:italic 700 clamp(28px,8vw,42px)/1.2 'Playfair Display',serif;margin:0 0 14px;text-shadow:0 0 24px rgba(224,69,123,.6)}
+#fin p{font:italic 500 19px/1.5 'Playfair Display',serif;color:var(--pink);max-width:340px;margin:0 0 28px}
+.rain{position:fixed;top:-40px;z-index:40;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(var(--rot))}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<img class="duo l" src="assets/her.png" alt="">
+<img class="duo r" src="assets/him.png" alt="">
+
+<div id="app">
+  <div id="hud">
+    <div id="hRound"></div>
+    <div class="pips" id="pips"></div>
+    <button class="iconb" id="mute" aria-label="sound">♫</button>
+  </div>
+  <div id="board" class="lock">
+    <button class="pad" id="p0" aria-label="pink heart"><svg viewBox="0 0 24 22"><path d="M12 21C4 15 1 11 1 7a5.5 5.5 0 0 1 11-1.5A5.5 5.5 0 0 1 23 7c0 4-3 8-11 14z"/></svg></button>
+    <button class="pad" id="p1" aria-label="gold star"><svg viewBox="0 0 24 24"><path d="M12 1.500l3.100 6.600 7.200.9-5.300 5 1.400 7.200L12 17.600l-6.400 3.600L7 14l-5.300-5 7.200-.9z"/></svg></button>
+    <button class="pad" id="p2" aria-label="violet moon"><svg viewBox="0 0 24 24"><path d="M20 15.500A9 9 0 0 1 8.500 4a9 9 0 1 0 11.500 11.500z"/></svg></button>
+    <button class="pad" id="p3" aria-label="red rose"><svg viewBox="0 0 24 24"><path d="M12 2c3 2 5 4 5 7 0 2-1 3-2 4 2-1 5-1 6 1 1 3-2 6-9 9-7-3-10-6-9-9 1-2 4-2 6-1-1-1-2-2-2-4 0-3 2-5 5-7z"/></svg></button>
+    <div id="hub"><b id="hN">0</b><span id="hT"></span></div>
+  </div>
+  <div id="msg"></div>
+</div>
+
+<div class="ov on" id="title">
+  <h1 id="tT"></h1>
+  <div class="sub" id="tS"></div>
+  <div class="how" id="tH"></div>
+  <button class="btn" id="go"></button>
+</div>
+<div class="ov" id="mem"><div class="pol"><div class="ph" id="mPh"></div><div class="mt" id="mT"></div><div class="mx" id="mX"></div></div><button class="btn sm" id="mGo" style="margin-top:26px">Continue ♥</button></div>
+<div class="ov" id="fin"><h2 id="f1"></h2><p id="f2"></p><button class="btn sm" id="again"></button></div>
+<audio id="bgm" loop preload="auto"></audio>
+
+<script src="content.js"></script>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id),sleep=ms=>new Promise(r=>setTimeout(r,ms)),rnd=a=>a[Math.floor(Math.random()*a.length)];
+// stars
+for(let i=0;i<70;i++){const s=document.createElement('i');s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*2.6}s`;$('stars').appendChild(s)}
+/* ---------- sound ---------- */
+let AC=null,on=true;
+const ac=()=>{try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}return AC};
+function note(f,d,v,w){if(!on)return;const a=ac();if(!a)return;try{const s=a.currentTime+(w||0);
+  [[f,'sine',1],[f*2,'triangle',.35]].forEach(([fr,ty,k])=>{const o=a.createOscillator(),g=a.createGain();o.type=ty;o.frequency.value=fr;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime((v||.16)*k,s+.015);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(a.destination);o.start(s);o.stop(s+d+.05)})}catch(e){}}
+const buzz=()=>{if(!on)return;const a=ac();if(!a)return;try{const s=a.currentTime,o=a.createOscillator(),g=a.createGain();o.type='sawtooth';o.frequency.setValueAtTime(180,s);o.frequency.exponentialRampToValueAtTime(90,s+.35);g.gain.setValueAtTime(.09,s);g.gain.exponentialRampToValueAtTime(.0001,s+.38);o.connect(g);g.connect(a.destination);o.start(s);o.stop(s+.4)}catch(e){}};
+const FREQ=[523.25,659.25,783.99,987.77]; // C E G B — always sounds pretty
+const bgm=$('bgm');if(CONFIG.music){bgm.src=CONFIG.music;bgm.volume=.35}
+function setSound(v){on=v;$('mute').classList.toggle('off',!v);if(v&&CONFIG.music)bgm.play().catch(()=>{});else bgm.pause()}
+$('mute').onclick=()=>{ac();setSound(!on)};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)bgm.pause();else if(on&&started&&CONFIG.music)bgm.play().catch(()=>{})});
+/* ---------- hearts ---------- */
+const heart=c=>`<svg viewBox="0 0 24 22" width="100%" height="100%"><path fill="${c}" d="M12 21C4 15 1 11 1 7a5.5 5.5 0 0 1 11-1.5A5.5 5.5 0 0 1 23 7c0 4-3 8-11 14z"/></svg>`;
+function rain(n){for(let i=0;i<n;i++){const d=document.createElement('div');d.className='rain';const s=14+Math.random()*24;d.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s*.92}px;animation-duration:${2.4+Math.random()*2.6}s;animation-delay:${Math.random()*1.4}s;--rot:${(Math.random()*140-70)|0}deg`;d.innerHTML=heart(['#e0457b','#f4a6c0','#ff7aa8','#f4efe3','#c8382d','#e7bf4a'][i%6]);document.body.appendChild(d);setTimeout(()=>d.remove(),6800)}}
+/* ---------- game ---------- */
+const pads=[0,1,2,3].map(i=>$('p'+i)),board=$('board');
+let started=false,seq=[],round=0,busy=true,pos=0,gen=0;
+const N=CONFIG.rounds;
+$('tT').textContent=CONFIG.title;$('tS').textContent=CONFIG.subtitle.toUpperCase();$('tH').textContent=CONFIG.howTo;$('go').textContent=CONFIG.startBtn;
+$('pips').innerHTML=Array.from({length:N},()=>'<i></i>').join('');
+function setHud(){$('hRound').textContent=CONFIG.roundLabel.toUpperCase()+' '+Math.max(round,1)+'/'+N;[...$('pips').children].forEach((p,i)=>p.classList.toggle('on',i<round-1||(i===round-1&&false)))}
+function say(t){$('msg').textContent=t||''}
+async function flash(i,ms){pads[i].classList.add('lit');note(FREQ[i],Math.max(.35,ms/1000+.15));await sleep(ms);pads[i].classList.remove('lit')}
+function lock(v){busy=v;board.classList.toggle('lock',v)}
+async function playSeq(){
+  const my=++gen;lock(true);$('hT').textContent=CONFIG.watch;say('');await sleep(700);
+  const speed=Math.max(230,520-round*24);
+  for(const i of seq){if(my!==gen)return;await flash(i,speed);await sleep(Math.max(90,speed*.35))}
+  if(my!==gen)return;pos=0;$('hT').textContent=CONFIG.yourTurn;lock(false)
+}
+async function nextRound(){
+  round++;seq.push(Math.floor(Math.random()*4));if(seq.length>1&&seq[seq.length-1]===seq[seq.length-2]&&Math.random()<.6)seq[seq.length-1]=(seq[seq.length-1]+1+Math.floor(Math.random()*3))%4;
+  $('hN').textContent=round;setHud();await playSeq()
+}
+async function press(i){
+  if(busy)return;ac();
+  if(seq[pos]!==i){lock(true);pads[i].classList.add('lit');buzz();board.classList.add('shake');say(rnd(OOPS));await sleep(450);pads[i].classList.remove('lit');board.classList.remove('shake');await sleep(500);say('');await playSeq();return}
+  pads[i].classList.add('lit');note(FREQ[i],.5);setTimeout(()=>pads[i].classList.remove('lit'),160);pos++;
+  if(pos>=seq.length){
+    lock(true);setHud();[...$('pips').children].forEach((p,k)=>p.classList.toggle('on',k<round));
+    say(rnd(CHEERS));await sleep(650);
+    if(round>=N){win();return}
+    if(MEMORIES[round]){await memory(MEMORIES[round])}
+    say('');await nextRound()
+  }
+}
+pads.forEach((p,i)=>{p.addEventListener('pointerdown',e=>{e.preventDefault();press(i)})});
+addEventListener('keydown',e=>{const k={'1':0,'2':1,'3':2,'4':3,q:0,w:1,a:2,s:3}[e.key.toLowerCase()];if(k!=null&&started)press(k)});
+function memory(m){return new Promise(res=>{
+  const ph=$('mPh');ph.textContent='♥';
+  if(m.photo){const im=new Image();im.onload=()=>{ph.textContent='';ph.appendChild(im)};im.onerror=()=>{ph.innerHTML='add your photo here:<br><br>'+m.photo};im.src=m.photo}
+  else ph.textContent='add your photo here';
+  $('mT').textContent=m.title;$('mX').textContent=m.text;$('mem').classList.add('on');
+  [523,659,784,1047].forEach((f,k)=>note(f,.3,.12,k*.09));rain(14);
+  $('mGo').onclick=()=>{$('mem').classList.remove('on');res()}})}
+/* Happy Birthday, played on the pads */
+const HB=[[392,.4],[392,.2],[440,.6],[392,.6],[523,.6],[494,1.1],[392,.4],[392,.2],[440,.6],[392,.6],[587,.6],[523,1.1],[392,.4],[392,.2],[784,.6],[659,.6],[523,.6],[494,.6],[440,.9],[698,.4],[698,.2],[659,.6],[523,.6],[587,.6],[523,1.4]];
+async function win(){
+  await memory(WIN.memory);say('');$('hT').textContent='♥';$('hN').textContent='23';
+  for(const [f,d] of HB){const i=Math.floor(Math.random()*4);pads[i].classList.add('lit');note(f,d+.25,.17);await sleep(d*430);pads[i].classList.remove('lit');await sleep(40)}
+  rain(70);[523,659,784,1047].forEach((f,k)=>note(f,1.2,.13,k*.12));
+  $('f1').textContent=WIN.line1;$('f2').textContent=WIN.line2;$('again').textContent=WIN.again;await sleep(600);$('fin').classList.add('on');setTimeout(()=>rain(40),1800)
+}
+$('again').onclick=()=>{$('fin').classList.remove('on');reset()};
+function reset(){gen++;seq=[];round=0;$('hN').textContent='0';setHud();[...$('pips').children].forEach(p=>p.classList.remove('on'));say('');nextRound()}
+$('go').onclick=()=>{ac();started=true;setSound(true);note(784,.2,.12);$('title').classList.remove('on');setHud();setTimeout(reset,500)};
+setHud();
+window.__g={get seq(){return seq},get busy(){return busy},press,get round(){return round}};
+})();
+</script>
+</body>
+</html>
